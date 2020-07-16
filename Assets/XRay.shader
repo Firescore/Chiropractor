@@ -3,7 +3,8 @@
     Properties
     {
         _Color ("Color", Color) = (1,1,1,1)
-		_XColor("XRay Color", Color) = (1,1,1,1)
+		//_XColor("XRay Color", Color) = (1,1,1,1)
+		_HDR("Intensity",float) = 0
     }
     SubShader
     {
@@ -23,6 +24,8 @@
         half _Glossiness;
         half _Metallic;
         fixed4 _Color;
+		float _HDR;
+		
 
         UNITY_INSTANCING_BUFFER_START(Props)
         UNITY_INSTANCING_BUFFER_END(Props)
@@ -31,6 +34,8 @@
         {
             fixed4 c =_Color;
             o.Albedo =c.rgb;
+			o.Albedo = c.rgb;
+			//o.Emission = c.rgb * _HDR;
             o.Alpha = c.a;
         }
 
@@ -47,16 +52,17 @@
 			float2 uv_MainTex;
 		};
 
-		fixed4 _XColor;
+		fixed4 _Color;
+		float _HDR;
 
 		UNITY_INSTANCING_BUFFER_START(Props)
 		UNITY_INSTANCING_BUFFER_END(Props)
 
 		void surf(Input IN, inout SurfaceOutputStandard o)
 		{
-			fixed4 c = _XColor;
+			fixed4 c = _Color;
 			o.Albedo = c.rgb;
-			o.Emission = c.rgb;
+			//o.Emission = c.rgb*_HDR;
 			o.Alpha = c.a;
 		}
 		ENDCG

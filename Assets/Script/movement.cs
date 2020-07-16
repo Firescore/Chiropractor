@@ -5,6 +5,7 @@ using UnityEngine;
 public class movement : MonoBehaviour
 {
     public static movement mv;
+    public GameObject scanner;
     public Animator anime;
     public Transform[] pos;
     public float[] dist;
@@ -25,6 +26,7 @@ public class movement : MonoBehaviour
     {
         mv = this;
         Application.targetFrameRate = 60;
+        scanner.SetActive(false);
     }
 
     void Update()
@@ -71,6 +73,7 @@ public class movement : MonoBehaviour
             if(transform.rotation == pos[4].rotation)
             {
                 anime.SetBool("sit", true);
+                scanner.SetActive(true);
                 isCharSit = true;
             }
         }
