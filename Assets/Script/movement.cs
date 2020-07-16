@@ -5,6 +5,7 @@ using UnityEngine;
 public class movement : MonoBehaviour
 {
     public static movement mv;
+    public levelManager lv;
     public GameObject scanner;
     public Animator anime;
     public Transform[] pos;
@@ -33,6 +34,10 @@ public class movement : MonoBehaviour
     {
         walkIn();
         walkToChair();
+        if (stopTalking && !moveon)
+        {
+            lv.goToSeat.SetActive(true);
+        }
     }
     void walkIn()
     {
@@ -73,6 +78,7 @@ public class movement : MonoBehaviour
             if(transform.rotation == pos[4].rotation)
             {
                 anime.SetBool("sit", true);
+                lv.NextScene.SetActive(true);
                 scanner.SetActive(true);
                 isCharSit = true;
             }
@@ -88,7 +94,6 @@ public class movement : MonoBehaviour
 
         if (stopWalking && !stopTalking &&!moveon)
         {
-
             StartCoroutine(startTalk(0.2f));
             StartCoroutine(stopTalk(stopTalkingT));
         }
@@ -128,19 +133,21 @@ public class movement : MonoBehaviour
     public void moveOn()
     {
         moveon = true;
-
+        lv.goToSeat.SetActive(false);
+        lv.Chat.SetActive(false);
     }
 
     IEnumerator startTalk(float t)
     {
         yield return new WaitForSeconds(t);
         anime.SetBool("talk", true);
+        lv.Chat.SetActive(true);
     }
     IEnumerator stopTalk(float t)
     {
         yield return new WaitForSeconds(t);
         anime.SetBool("talk", false);
         stopTalking = true;
-
+        
     }
 }

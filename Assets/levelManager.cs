@@ -6,6 +6,8 @@ public class levelManager : MonoBehaviour
 {
     public static levelManager lManager;
     public GameObject EntryScene, MainScene,SwitchImage;
+    public GameObject goToSeat, NextScene;
+    public GameObject Chat;
 
     // Start is called before the first frame update
     void Start()
@@ -13,6 +15,9 @@ public class levelManager : MonoBehaviour
         SwitchImage.SetActive(false);
         EntryScene.SetActive(true);
         MainScene.SetActive(false);
+        goToSeat.SetActive(false);
+        NextScene.SetActive(false);
+        Chat.SetActive(false);
     }
     public void switchScene()
     {
@@ -24,5 +29,6 @@ public class levelManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         EntryScene.SetActive(false);
         MainScene.SetActive(true);
+        NextScene.SetActive(false);
     }
 }
