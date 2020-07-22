@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using TMPro;
 
 public class ForcePower : MonoBehaviour
@@ -6,25 +7,35 @@ public class ForcePower : MonoBehaviour
     public static ForcePower forcePower;
     public GameObject ball;
     public TextMeshPro powerValue;
+    public Animator anime;
     public float amount = 0;
     public float maxValue = 0;
     public float minValue = 0;
     public float speed = 0;
-
+    
     bool maxValueReached = false;
     bool minValueReached = false;
 
-    bool isMeterWorking = true;
-
+    public bool isMeterWorking = true;
+    public bool startMeshing = false;
     private void Start()
     {
+        anime.enabled = false;
         forcePower = this;
     }
     void Update()
     {
         if (!isMeterWorking)
         {
-            powerValue.text = amount.ToString();
+            
+            if(amount >= 20 && amount <= 40)
+            {
+                powerValue.text = "89";
+            }
+            else
+            {
+                powerValue.text = amount.ToString();
+            }
         }
         if (isMeterWorking)
         {
@@ -34,6 +45,7 @@ public class ForcePower : MonoBehaviour
 
         if(GameManager.instence.shoot && Input.GetMouseButtonDown(0))
         {
+            anime.enabled = true;            
             isMeterWorking = false;
         }
 

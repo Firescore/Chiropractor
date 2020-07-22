@@ -6,7 +6,7 @@ public class movement : MonoBehaviour
 {
     public static movement mv;
     public levelManager lv;
-    public GameObject scanner;
+    //public GameObject scanner;
     public Animator anime;
     public Transform[] pos;
     public float[] dist;
@@ -25,15 +25,13 @@ public class movement : MonoBehaviour
     public bool isCharSit = false;
     void Start()
     {
-        mv = this;
-        Application.targetFrameRate = 60;
-        scanner.SetActive(false);
+        mv = this;      
+        //scanner.SetActive(false);
     }
 
     void Update()
     {
         walkIn();
-        walkToChair();
         if (stopTalking && !moveon)
         {
             lv.goToSeat.SetActive(true);
@@ -50,104 +48,74 @@ public class movement : MonoBehaviour
         {
             anime.SetBool("walk", true);
             transform.position = Vector3.MoveTowards(transform.position, pos[0].position, speed * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, pos[0].rotation, speed * Time.deltaTime);
         }
         if (isReach0)
         {
             anime.SetBool("walk", true);
             transform.position = Vector3.MoveTowards(transform.position, pos[1].position, speed * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, pos[1].rotation, speed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, pos[1].rotation, speed*3 * Time.deltaTime);
         }
         if (isReach1)
         {
             anime.SetBool("walk", true);
             transform.position = Vector3.MoveTowards(transform.position, pos[2].position, speed * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, pos[2].rotation, speed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, pos[2].rotation, speed*3 * Time.deltaTime);
         }
         if (isReach2)
         {
             anime.SetBool("walk", true);
             transform.position = Vector3.MoveTowards(transform.position, pos[3].position, speed * Time.deltaTime);
-            transform.rotation = Quaternion.Lerp(transform.rotation, pos[3].rotation, speed * Time.deltaTime);
+            transform.rotation = Quaternion.Lerp(transform.rotation, pos[3].rotation, speed*3 * Time.deltaTime);
         }
         if (isReach3)
         {
             transform.position = Vector3.MoveTowards(transform.position, pos[4].position, speed * Time.deltaTime);
             transform.rotation = Quaternion.Lerp(transform.rotation, pos[4].rotation, speed*5 * Time.deltaTime);
             anime.SetBool("walk", false);
-            if(transform.rotation == pos[4].rotation)
-            {
-                anime.SetBool("sit", true);
-                lv.NextScene.SetActive(true);
-                scanner.SetActive(true);
-                isCharSit = true;
-            }
+        }
+        if (transform.rotation == pos[4].rotation)
+        {
+            anime.SetBool("sit", true);
+            isCharSit = true;
+            StartCoroutine(startTalk(1f));
+            StartCoroutine(switchScreen(3f));
         }
 
-        
-
-        if (dist[0] < 0.5f && !moveon)
+        if (transform.position == pos[0].position)
         {
-            stopWalking = true;
-            anime.SetBool("walk", false);
+            FstReach = true;
+            isReach0 = true;
         }
-
-        if (stopWalking && !stopTalking &&!moveon)
+        if (transform.position == pos[1].position)
         {
-            StartCoroutine(startTalk(0.2f));
-            StartCoroutine(stopTalk(stopTalkingT));
+            isReach0 = false;
+            isReach1 = true;
         }
-
-    }
-    void walkToChair()
-    {
-
-        if (moveon)
+        if (transform.position == pos[2].position)
         {
-            if (transform.position == pos[0].position)
-            {
-                FstReach = true;
-                isReach0 = true;
-            }
-            if (transform.position == pos[1].position)
-            {
-                isReach0 = false;
-                isReach1 = true;
-            }
-            if (transform.position == pos[2].position)
-            {
-                isReach1 = false;
-                isReach2 = true;
-            }
-            if (transform.position == pos[3].position)
-            {
-                isReach2 = false;
-                isReach3 = true;
-            }
-            if (transform.position == pos[4].position)
-            {
-                isReach4 = true;
-            }
+            isReach1 = false;
+            isReach2 = true;
+        }
+        if (transform.position == pos[3].position)
+        {
+            isReach2 = false;
+            isReach3 = true;
+        }
+        if (transform.position == pos[4].position)
+        {
+            isReach4 = true;
         }
     }
-    public void moveOn()
-    {
-        moveon = true;
-        lv.goToSeat.SetActive(false);
-        lv.Chat.SetActive(false);
-    }
+
 
     IEnumerator startTalk(float t)
     {
         yield return new WaitForSeconds(t);
-        anime.SetBool("talk", true);
         lv.Chat.SetActive(true);
     }
-    IEnumerator stopTalk(float t)
+    IEnumerator switchScreen(float t)
     {
         yield return new WaitForSeconds(t);
-        anime.SetBool("talk", false);
-        stopTalking = true;
-        
+        lv.switchScene();
     }
 }

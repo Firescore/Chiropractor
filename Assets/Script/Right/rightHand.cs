@@ -1,31 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class rightHand : MonoBehaviour
 {
 
+    public static rightHand rH;
     public Animator anime;
-
-
-    public float angle;
-    public float angleToRotate;
-    [Header("--------------------------------------------------------------")]
-    public float anglX;
-    public float angleToRotateX;
-    [Header("--------------------------------------------------------------")]
-    public float anglZ;
-    public float angleToRotateZ;
     [Header("--------------------------------------------------------------")]
     public float dataFromPowerMeter;
 
-    public float speed = 0;
-    public static rightHand rH;
-    bool run = false;
     private void Start()
     {
         rH = this;
-        //transform.localEulerAngles = new Vector3(angle,transform.localEulerAngles.y, transform.localEulerAngles.z);
-        //anglX = transform.localPosition.x;
-        //anglZ = transform.localPosition.z;
+
     }
     private void Update()
     {
@@ -35,13 +22,12 @@ public class rightHand : MonoBehaviour
     }
     void animateArm()
     {
-
         if (Input.GetMouseButtonDown(0) && GameManager.instence.shoot)
         {
             
             dataFromPowerMeter = ForcePower.forcePower.amount;
-
-            if(dataFromPowerMeter>=6&& dataFromPowerMeter <= 19)
+            StartCoroutine(test(3f));
+            /*if (dataFromPowerMeter >= 6 && dataFromPowerMeter <= 19)
             {
                 anime.SetBool("notwin", true);
             }
@@ -60,9 +46,38 @@ public class rightHand : MonoBehaviour
             if (dataFromPowerMeter >= 56 && dataFromPowerMeter <= 60)
             {
                 anime.SetBool("lose", true);
-            }
-            run = true;
+            }*/
+
         }
         
+    }
+    IEnumerator test(float t)
+    {
+        yield return new WaitForSeconds(t);
+        if (dataFromPowerMeter >= 6 && dataFromPowerMeter <= 19)
+        {
+            //yield return new WaitForSeconds(t);
+            anime.SetBool("notwin", true);
+        }
+        if (dataFromPowerMeter >= 40 && dataFromPowerMeter <= 55)
+        {
+            //yield return new WaitForSeconds(t);
+            anime.SetBool("notwin", true);
+        }
+        if (dataFromPowerMeter >= 20 && dataFromPowerMeter <= 39)
+        {
+            //yield return new WaitForSeconds(t);
+            anime.SetBool("win", true);
+        }
+        if (dataFromPowerMeter >= 0 && dataFromPowerMeter <= 5)
+        {
+            //yield return new WaitForSeconds(t);
+            anime.SetBool("lose", true);
+        }
+        if (dataFromPowerMeter >= 56 && dataFromPowerMeter <= 60)
+        {
+            //yield return new WaitForSeconds(t);
+            anime.SetBool("lose", true);
+        }
     }
 }

@@ -66,7 +66,7 @@ public class moveLeftSystem : MonoBehaviour
         {
             GameManager.instence.isTargetPlacedLeft = true;
             gameObject.GetComponent<leftHand>().enabled = true;
-            TargetLeft.TL.ps.startColor = Color.green;
+            
             if (gameObject.GetComponent<moveLeftSystem>().enabled != false)
             {
                 gameObject.GetComponent<moveLeftSystem>().enabled = false;

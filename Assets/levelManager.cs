@@ -5,6 +5,7 @@ using UnityEngine;
 public class levelManager : MonoBehaviour
 {
     public static levelManager lManager;
+    public GameManager gm;
     public GameObject EntryScene, MainScene,SwitchImage;
     public GameObject goToSeat, NextScene;
     public GameObject Chat;
@@ -30,5 +31,6 @@ public class levelManager : MonoBehaviour
         EntryScene.SetActive(false);
         MainScene.SetActive(true);
         NextScene.SetActive(false);
+        gm.setPos();
     }
 }

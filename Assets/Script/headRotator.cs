@@ -5,17 +5,14 @@ using UnityEngine.UI;
 
 public class headRotator : MonoBehaviour
 {
-    public float angle;
-    public float angleToRotate;
+    public static headRotator hR;
     public float dataFromPowerMeter;
-
     public Animator anime;
-    public float speed = 0;
-    bool rotate = false;
 
     private void Start()
     {
-        transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, angle, transform.localEulerAngles.z);
+        hR = this;
+      
     }
     private void Update()
     {
@@ -25,9 +22,9 @@ public class headRotator : MonoBehaviour
     {
         if (GameManager.instence.shoot && Input.GetMouseButtonDown(0))
         {
-            //anime.SetBool("notwin", true);
             dataFromPowerMeter = ForcePower.forcePower.amount;
-
+            StartCoroutine(test(3f));
+/*
             if (dataFromPowerMeter >= 6 && dataFromPowerMeter <= 19)
             {
                 anime.SetBool("notwin", true);
@@ -47,9 +44,36 @@ public class headRotator : MonoBehaviour
             if (dataFromPowerMeter >= 56 && dataFromPowerMeter <= 60)
             {
                 anime.SetBool("lose", true);
-            }
-
-            rotate = true;
+            }*/
+        }
+    }
+    IEnumerator test(float t)
+    {
+        yield return new WaitForSeconds(t);
+        if (dataFromPowerMeter >= 6 && dataFromPowerMeter <= 19)
+        {
+            //yield return new WaitForSeconds(t);
+            anime.SetBool("notwin", true);
+        }
+        if (dataFromPowerMeter >= 40 && dataFromPowerMeter <= 55)
+        {
+            //yield return new WaitForSeconds(t);
+            anime.SetBool("notwin", true);
+        }
+        if (dataFromPowerMeter >= 20 && dataFromPowerMeter <= 39)
+        {
+            //yield return new WaitForSeconds(t);
+            anime.SetBool("win", true);
+        }
+        if (dataFromPowerMeter >= 0 && dataFromPowerMeter <= 5)
+        {
+            //yield return new WaitForSeconds(t);
+            anime.SetBool("lose", true);
+        }
+        if (dataFromPowerMeter >= 56 && dataFromPowerMeter <= 60)
+        {
+            //yield return new WaitForSeconds(t);
+            anime.SetBool("lose", true);
         }
     }
 }

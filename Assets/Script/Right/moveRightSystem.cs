@@ -64,11 +64,10 @@ public class moveRightSystem : MonoBehaviour
         targetX = Mathf.Abs(transform.position.x - target.transform.position.x);
         targetY = Mathf.Abs(transform.position.y - target.transform.position.y);
 
-        if(targetX<=0.7f && targetY <= 0.7f)
+        if(targetX<=1.5f && targetY <= 1.5f)
         {
             GameManager.instence.isTargetPlacedRight = true;
             gameObject.GetComponent<rightHand>().enabled = true;
-            TargetRight.TR.ps.startColor = Color.green;
             if (gameObject.GetComponent<moveRightSystem>().enabled != false)
             {
                 gameObject.GetComponent<moveRightSystem>().enabled = false;
