@@ -10,6 +10,8 @@ public class Movement : MonoBehaviour
     public float moveSpeed = 2;
     public float rotationSpeed = 2;
 
+    public static bool isRotationComplete = false;
+
     void Start()
     {
         bubbleText.SetActive(false);
@@ -42,5 +44,7 @@ public class Movement : MonoBehaviour
         {
             transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 90, 0), rotationSpeed*Time.deltaTime);
         }
+        if (!isRotationComplete && transform.localRotation == Quaternion.Euler(0, 90, 0))
+            isRotationComplete = true;
     }
 }
