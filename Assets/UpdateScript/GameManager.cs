@@ -1,38 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager gm;
     public GameObject rHand,lHand,x_Ray;
 
     [Header("-------------------------------------------")]
     public Movement mv;
-
+    public GameObject transitionImage;
     [Header("-------------------------------------------")]
-    public bool isTrigger = false;
+    public bool handInIdlPos = false;
 
-    // Start is called before the first frame update
     void Start()
     {
+        transitionImage.SetActive(false);
+        gm = this;
         Application.targetFrameRate = 60;
     }
 
-    // Update is called once per frame
     void Update()
     {
         StartCoroutine(grab_X_Ray(1.5f));
-        /*if (Movement.isRotationComplete && !isTrigger)
-        {
-            rHand.GetComponent<Animator>().SetTrigger("grab");
-            lHand.GetComponent<Animator>().SetTrigger("grab");
-            x_Ray.GetComponent<Animator>().SetTrigger("grab");
-            isTrigger = true;
-        }*/
+
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+    #region Scene 1
     IEnumerator grab_X_Ray(float t)
     {
-        if (Movement.isRotationComplete && !isTrigger)
+        if (Movement.isRotationComplete && !handInIdlPos)
         {
             rHand.GetComponent<Animator>().SetBool("GrabEx", true);
             lHand.GetComponent<Animator>().SetBool("GrabEx", true);
@@ -41,8 +40,10 @@ public class GameManager : MonoBehaviour
             rHand.GetComponent<Animator>().SetBool("GrabEx",false);
             lHand.GetComponent<Animator>().SetBool("GrabEx", false);
             x_Ray.GetComponent<Animator>().SetBool("GrabEx", false);
-            isTrigger = true;
+            yield return new WaitForSeconds(t);
+            handInIdlPos = true;
         }
 
     }
+    #endregion
 }
