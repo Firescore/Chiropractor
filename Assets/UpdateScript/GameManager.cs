@@ -32,14 +32,16 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        leftHPlaced = lHand.GetComponent<handMovement>().handPlaced;
-        rightHPlaced = rHand.GetComponent<handMovement>().handPlaced;
+        leftHPlaced = lHand.GetComponent<leftHandMovement>().handPlaced;
+        rightHPlaced = rHand.GetComponent<rightHandMovement>().handPlaced;
         StartCoroutine(grab_X_Ray(1.5f));
         StartCoroutine(desableAnime());
+        StartCoroutine(enableAnime());
 
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
+
     #region Scene 1
     IEnumerator grab_X_Ray(float t)
     {
@@ -82,4 +84,15 @@ public class GameManager : MonoBehaviour
         }
     }
     #endregion
+
+    IEnumerator enableAnime()
+    {
+        if (leftHPlaced && rightHPlaced)
+        {
+            yield return new WaitForSeconds(0.1f);
+            rHand.GetComponent<Animator>().enabled = true;
+            rHand.GetComponent<Animator>().SetBool("Solder", true);
+            lHand.GetComponent<Animator>().enabled = true;
+        }
+    }
 }

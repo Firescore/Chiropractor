@@ -1210,10 +1210,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8596926336719277183}
+  - component: {fileID: 5923846354817205388}
   - component: {fileID: 3074177738296209099}
   - component: {fileID: 3269022960668485355}
   - component: {fileID: 7642934388431436458}
-  - component: {fileID: 5923846354817205388}
   m_Layer: 0
   m_Name: Main 1
   m_TagString: Untagged
@@ -1240,6 +1240,25 @@ Transform:
   m_Father: {fileID: 8052677176442613043}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -135, z: 0}
+--- !u!95 &5923846354817205388
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4602115498514027340}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: e28f6828ad6e99c419899bc5861f297e, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &3074177738296209099
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1318,25 +1337,7 @@ MonoBehaviour:
   target: {fileID: 0}
   pos: {fileID: 0}
   angleRotate: 180
---- !u!95 &5923846354817205388
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4602115498514027340}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e28f6828ad6e99c419899bc5861f297e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  handPlaced: 0
 --- !u!1 &4743404423461089321
 GameObject:
   m_ObjectHideFlags: 0
@@ -2158,6 +2159,7 @@ MonoBehaviour:
   target: {fileID: 0}
   pos: {fileID: 0}
   angleRotate: 40
+  handPlaced: 0
 --- !u!1 &7913888195098034400
 GameObject:
   m_ObjectHideFlags: 0

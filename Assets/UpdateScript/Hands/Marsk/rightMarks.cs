@@ -5,6 +5,7 @@ using UnityEngine;
 public class rightMarks : MonoBehaviour
 {
     public GameObject _hand;
+    public Animator anime;
     public float speed = 5;
 
     private SpriteRenderer renderer;
@@ -14,9 +15,9 @@ public class rightMarks : MonoBehaviour
 
     void Start()
     {
+        anime.enabled = false;
         renderer = GetComponent<SpriteRenderer>();
         renderer.material.color = Color.red;
-
     }
 
     // Update is called once per frame
@@ -30,9 +31,10 @@ public class rightMarks : MonoBehaviour
 
     void colorChange()
     {
-        if (_hand.GetComponent<handMovement>().handPlaced)
+        if (_hand.GetComponent<rightHandMovement>().handPlaced)
         {
             renderer.material.color = Color.green;
+            StartCoroutine(destroy());
         }
     }
     void rotation()
@@ -46,5 +48,12 @@ public class rightMarks : MonoBehaviour
             _angle = 0;
         }
         transform.localRotation = Quaternion.Euler(0, 90, _angle);
+    }
+    IEnumerator destroy()
+    {
+        anime.enabled = true;
+        yield return new WaitForSeconds(0.5f);
+        this.gameObject.SetActive(false);
+
     }
 }

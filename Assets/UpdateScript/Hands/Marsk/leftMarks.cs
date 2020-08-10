@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Marks : MonoBehaviour
+public class leftMarks : MonoBehaviour
 {
     public GameObject _hand;
     public Animator anime;
@@ -31,7 +31,7 @@ public class Marks : MonoBehaviour
 
     void colorChange()
     {
-        if (_hand.GetComponent<handMovement>().handPlaced)
+        if (_hand.GetComponent<leftHandMovement>().handPlaced)
         {
             renderer.material.color = Color.green;
             StartCoroutine(destroy());

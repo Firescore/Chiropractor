@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class handMovement : MonoBehaviour
+public class rightHandMovement : MonoBehaviour
 {
     public Camera cam;
     public GameObject target;
@@ -18,7 +18,7 @@ public class handMovement : MonoBehaviour
     float targetY;
     public void Update()
     {
-        if (mouseMoving)
+        if (mouseMoving && !GameManager.gm.rightHPlaced)
         {
             transform.position = GetMouseAsWorldPoint() + mOffset;
         }
@@ -66,8 +66,6 @@ public class handMovement : MonoBehaviour
             transform.position = pos.position;
             transform.localRotation = Quaternion.Euler(0, angleRotate, 0);
             handPlaced = true;
-
-        //-0.00226,0.00399,-0.00187, y=40
         }
     }
 }
