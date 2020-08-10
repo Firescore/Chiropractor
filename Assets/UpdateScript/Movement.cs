@@ -66,7 +66,7 @@ public class Movement : MonoBehaviour
         
     }
     #endregion
-
+    #region Scene 2
     void sit()
     {
         if (GameManager.gm.handInIdlPos)
@@ -96,5 +96,5 @@ public class Movement : MonoBehaviour
             }
         }
     }
-    
+    #endregion
 }

@@ -5,16 +5,12 @@ using UnityEngine;
 public class CameraMovement : MonoBehaviour
 {
     public Animator anime;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
     void Update()
     {
         StartCoroutine(transitionToBack());
+        StartCoroutine(goUp());
+        
     }
     IEnumerator transitionToBack()
     {
@@ -24,7 +20,15 @@ public class CameraMovement : MonoBehaviour
             GameManager.gm.transitionImage.SetActive(true);
             GameManager.gm.x_Ray.SetActive(false);
             anime.SetBool("goBack", true);
-        }
-        
+        } 
+    }
+    IEnumerator goUp()
+    {
+        yield return new WaitForSeconds(0.5f);
+        if (GameManager.gm.leftHPlaced && GameManager.gm.rightHPlaced)
+            anime.SetBool("goUp", true);
+
+        yield return new WaitForSeconds(0.5f);
+        GameManager.gm.cameraPlacedUp = true;
     }
 }
