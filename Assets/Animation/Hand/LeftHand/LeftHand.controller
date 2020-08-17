@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: Grab
+    m_ConditionEvent: grab
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -4557697871866308686}
@@ -34,7 +34,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Grab
+    m_ConditionEvent: grab
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8486176679815002339}
@@ -142,7 +142,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: Grab
+  - m_Name: grab
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -172,10 +172,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 8486176679815002339}
-    m_Position: {x: 280, y: 330, z: 0}
+    m_Position: {x: 280, y: 250, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -4557697871866308686}
-    m_Position: {x: 280, y: 400, z: 0}
+    m_Position: {x: 280, y: 330, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 4307410892950663752}
     m_Position: {x: 40, y: 240, z: 0}
@@ -256,7 +256,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Grab
+    m_ConditionEvent: grab
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 8486176679815002339}

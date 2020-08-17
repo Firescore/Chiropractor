@@ -4,18 +4,26 @@ using UnityEngine;
 
 public class leftHandMovement : MonoBehaviour
 {
+    public static leftHandMovement lhm;
     public Camera cam;
     public GameObject target;
     public Transform pos;
+
+
     public float angleRotate;
     public bool handPlaced = false;
 
+    private bool mouseMoving = false;
+
     private Vector3 mOffset;
     private float mZCoord;
+    private float targetY;
+    private float targetX;
 
-    bool mouseMoving = false;
-    float targetX;
-    float targetY;
+    private void Start()
+    {
+        lhm = this;
+    }
     public void Update()
     {
         if (mouseMoving && !GameManager.gm.leftHPlaced)
@@ -64,7 +72,7 @@ public class leftHandMovement : MonoBehaviour
         if (targetX <= 0.07f && targetY <= 0.03f)
         {
             transform.position = pos.position;
-            transform.localRotation = Quaternion.Euler(0, angleRotate, 0);
+            //transform.localRotation = Quaternion.Euler(0, angleRotate, 0);
             handPlaced = true;
         }
     }

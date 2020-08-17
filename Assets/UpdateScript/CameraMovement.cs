@@ -10,7 +10,9 @@ public class CameraMovement : MonoBehaviour
     {
         StartCoroutine(transitionToBack());
         StartCoroutine(goUp());
-        
+        cameraGoBack();
+
+
     }
     IEnumerator transitionToBack()
     {
@@ -26,9 +28,19 @@ public class CameraMovement : MonoBehaviour
     {
         yield return new WaitForSeconds(0.5f);
         if (GameManager.gm.leftHPlaced && GameManager.gm.rightHPlaced)
+        {
             anime.SetBool("goUp", true);
+            yield return new WaitForSeconds(0.65f);
+            GameManager.gm.cameraPlacedUp = true;
+        }
 
-        yield return new WaitForSeconds(0.5f);
-        GameManager.gm.cameraPlacedUp = true;
+    }
+    void cameraGoBack()
+    {
+        if (GameManager.gm.swipe >=6)
+        {
+            anime.SetBool("goUp", false);
+            SceneMan.sceneMan.enableScripts();
+        }
     }
 }

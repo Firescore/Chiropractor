@@ -6,9 +6,10 @@ public class leftMarks : MonoBehaviour
 {
     public GameObject _hand;
     public Animator anime;
+    public Material[] mat;
     public float speed = 5;
 
-    private SpriteRenderer renderer;
+    private new MeshRenderer renderer;
     private float _Disance = 0f;
     private float _angle = 0f;
     //private Color c;
@@ -16,8 +17,8 @@ public class leftMarks : MonoBehaviour
     void Start()
     {
         anime.enabled = false;
-        renderer = GetComponent<SpriteRenderer>();
-        renderer.material.color = Color.red;
+        renderer = GetComponent<MeshRenderer>();
+        renderer.material = mat[0];
     }
 
     // Update is called once per frame
@@ -33,7 +34,8 @@ public class leftMarks : MonoBehaviour
     {
         if (_hand.GetComponent<leftHandMovement>().handPlaced)
         {
-            renderer.material.color = Color.green;
+            //renderer.material.color = Color.green;
+            renderer.material = mat[1];
             StartCoroutine(destroy());
         }
     }

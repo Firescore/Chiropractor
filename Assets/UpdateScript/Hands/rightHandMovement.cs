@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class rightHandMovement : MonoBehaviour
 {
+    public static rightHandMovement rhm;
     public Camera cam;
     public GameObject target;
     public Transform pos;
@@ -16,6 +17,11 @@ public class rightHandMovement : MonoBehaviour
     bool mouseMoving = false;
     float targetX;
     float targetY;
+
+    private void Start()
+    {
+        rhm = this;
+    }
     public void Update()
     {
         if (mouseMoving && !GameManager.gm.rightHPlaced)
@@ -64,7 +70,7 @@ public class rightHandMovement : MonoBehaviour
         if (targetX <= 0.07f && targetY <= 0.03f )
         {
             transform.position = pos.position;
-            transform.localRotation = Quaternion.Euler(0, angleRotate, 0);
+            //transform.localRotation = Quaternion.Euler(0, angleRotate, 0);
             handPlaced = true;
         }
     }
