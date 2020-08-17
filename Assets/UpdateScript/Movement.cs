@@ -37,6 +37,7 @@ public class Movement : MonoBehaviour
         moveForward();
         desableChatBubble();
         sit();
+        StartCoroutine(endGame());
     }
     #region Scene 1
     void moveForward()
@@ -94,6 +95,17 @@ public class Movement : MonoBehaviour
             {
                 Destroy(bubbleText.gameObject);
             }
+        }
+    }
+    #endregion
+    #region Scene 3
+    //after competing level happy emote
+    IEnumerator endGame() 
+    {
+        if (GameManager.gm.chiropracterStarted)
+        {
+            yield return new WaitForSeconds(3.5f);
+            anime.SetBool("happy", true);
         }
     }
     #endregion

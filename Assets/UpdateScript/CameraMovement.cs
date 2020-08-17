@@ -27,7 +27,7 @@ public class CameraMovement : MonoBehaviour
     IEnumerator goUp()
     {
         yield return new WaitForSeconds(0.5f);
-        if (GameManager.gm.leftHPlaced && GameManager.gm.rightHPlaced)
+        if (GameManager.gm.leftHPlaced && GameManager.gm.rightHPlaced && GameManager.gm.swipe <= 5)
         {
             anime.SetBool("goUp", true);
             yield return new WaitForSeconds(0.65f);
@@ -37,7 +37,7 @@ public class CameraMovement : MonoBehaviour
     }
     void cameraGoBack()
     {
-        if (GameManager.gm.swipe >=6)
+        if (GameManager.gm.swipe >=5)
         {
             anime.SetBool("goUp", false);
             SceneMan.sceneMan.enableScripts();

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     public leftHandMovement lhm;
     public rightHandMovement rhm;
     public GameObject rHand,lHand,x_Ray,rootHand;
-
+    public Animator lC, rC;
     [Header("-------------------------------------------")]
     public Movement mv;
     public GameObject transitionImage;
@@ -20,6 +20,8 @@ public class GameManager : MonoBehaviour
 
     public float swipe = 0f;
     public float valueOfSlider = 0.5f;
+    public float coolDown = 1;
+    public float swipeRate = 1;
 
     [Header("-------------------------------------------")]
     public bool cameraPlacedUp = false;
@@ -30,6 +32,7 @@ public class GameManager : MonoBehaviour
     public bool handTeliport = false;
     public bool leftH = false;
     public bool rightH = false;
+    public bool chiropracterStarted = false;
 
     void Start()
     {
@@ -49,6 +52,8 @@ public class GameManager : MonoBehaviour
         StartCoroutine(desableAnime());
         StartCoroutine(enableAnime());
         handAnimation();
+        finalCrack();
+
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -63,7 +68,7 @@ public class GameManager : MonoBehaviour
             x_Ray.GetComponent<Animator>().SetBool("GrabEx", true);
             yield return new WaitForSeconds(t);
             handInIdlPos = true;
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(1.2f);
             leftM.SetActive(true);
             rightM.SetActive(true);
             rHand.GetComponent<Animator>().SetBool("GrabEx", false);
@@ -111,30 +116,53 @@ public class GameManager : MonoBehaviour
     
     void handAnimation()
     {
+        
         if (cameraPlacedUp)
         {
-            if(SwipeManager.swipeUp)
+            coolDown -= Time.deltaTime;
+            if (SwipeManager.swipeUp && coolDown <=0)
             {
                 if(swipe <=6)
                     swipe += 1;
 
                 if (swipe <= 6)
                 {
+                    coolDown = 1 / swipeRate;
+                    lC.SetBool("up", false);
+                    rC.SetBool("up", false);
                     rHand.GetComponent<Animator>().SetBool("grab", false);
                     lHand.GetComponent<Animator>().SetBool("grab", false);
                 }
             }
-            if(SwipeManager.swipeDown)
+            if(SwipeManager.swipeDown && coolDown <=0)
             {
                 if (swipe <= 6)
                     swipe += 1;
 
                 if (swipe <= 6)
-                    {
-                    rHand.GetComponent<Animator>().SetBool("grab", true);
-                    lHand.GetComponent<Animator>().SetBool("grab", true);
+                {
+                    coolDown = 1 / swipeRate;
+                    StartCoroutine(grab(0.5f));
                 }
             }
+        }
+    }
+    IEnumerator grab(float t)
+    {
+        rHand.GetComponent<Animator>().SetBool("grab", true);
+        lHand.GetComponent<Animator>().SetBool("grab", true);
+        yield return new WaitForSeconds(t);
+        lC.SetBool("up", true);
+        rC.SetBool("up", true);
+    }
+    void finalCrack()
+    {
+        if(checkHead.checkH.a && checkHead.checkH.b && checkHead.checkH.c&& SwipeManager.swipeLeft && !chiropracterStarted)
+        {
+            checkHead.checkH.head1.SetBool("win", true);
+            checkHead.checkH.lHand1.SetBool("win", true);
+            checkHead.checkH.rHand1.SetBool("win", true);
+            chiropracterStarted = true;
         }
     }
 }
