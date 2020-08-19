@@ -159,10 +159,12 @@ public class GameManager : MonoBehaviour
     {
         if(checkHead.checkH.a && checkHead.checkH.b && checkHead.checkH.c&& SwipeManager.swipeLeft && !chiropracterStarted)
         {
+            
             checkHead.checkH.head1.SetBool("win", true);
             checkHead.checkH.lHand1.SetBool("win", true);
             checkHead.checkH.rHand1.SetBool("win", true);
             chiropracterStarted = true;
         }
     }
+
 }

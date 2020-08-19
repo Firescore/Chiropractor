@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
+    public static Movement mv;
     public GameObject bubbleText;
     public Animator anime;
     public Vector3[] walkPos;
@@ -11,17 +12,17 @@ public class Movement : MonoBehaviour
     public float rotationSpeed = 2;
 
     private float _value = 1;
-    private SpriteRenderer _chat;
-
+    private MeshRenderer _chat;
+    public bool GameOver = false;
     
     
     public static bool isRotationComplete = false;
     void Start()
     {
         bubbleText.SetActive(false);
-
+        mv = this;
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
-        _chat = bubbleText.GetComponent<SpriteRenderer>();
+        _chat = bubbleText.GetComponent<MeshRenderer>();
         Color c = _chat.material.color;
         c.a = _value;
         _chat.material.color = c;
@@ -72,6 +73,7 @@ public class Movement : MonoBehaviour
     {
         if (GameManager.gm.handInIdlPos)
         {
+            UIManager.uIManager.PlaceHandsInTheCircle.SetActive(true);
             transform.position = Vector3.MoveTowards(transform.position, walkPos[2], moveSpeed * Time.deltaTime);
             anime.SetBool("sit", true);
         }
@@ -104,8 +106,12 @@ public class Movement : MonoBehaviour
     {
         if (GameManager.gm.chiropracterStarted)
         {
-            yield return new WaitForSeconds(3.5f);
+            UIManager.uIManager.FinalCrack.GetComponent<Animator>().SetBool("out", true);
+            yield return new WaitForSeconds(4.2f);
             anime.SetBool("happy", true);
+            yield return new WaitForSeconds(1f);
+            levelManager.levelMan.gameOver = true;
+
         }
     }
     #endregion

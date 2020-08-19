@@ -35,6 +35,8 @@ public class SceneMan : MonoBehaviour
             bg2.SetActive(false);
             indicator.SetActive(true);
             headRotatorSlider.gameObject.SetActive(true);
+            UIManager.uIManager.SwipeDownToGrab.GetComponent<Animator>().SetBool("out", true);
+            UIManager.uIManager.AdjustNeck.SetActive(true);
         }
         if (checkHead.checkH.a && checkHead.checkH.b && checkHead.checkH.c)
             StartCoroutine(hideSlider());

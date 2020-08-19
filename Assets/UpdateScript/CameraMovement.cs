@@ -29,6 +29,9 @@ public class CameraMovement : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         if (GameManager.gm.leftHPlaced && GameManager.gm.rightHPlaced && GameManager.gm.swipe <= 5)
         {
+            UIManager.uIManager.PlaceHandsInTheCircle.GetComponent<Animator>().SetBool("out", true);
+            yield return new WaitForSeconds(0.5f);
+            UIManager.uIManager.SwipeDownToGrab.SetActive(true);  
             anime.SetBool("goUp", true);
             yield return new WaitForSeconds(0.65f);
             GameManager.gm.cameraPlacedUp = true;

@@ -4,74 +4,39 @@ using TMPro;
 
 public class levelManager : MonoBehaviour
 {
-    public GameObject[] scene;
+    public static levelManager levelMan;
     public GameObject mainMenu,LevelUI,playButton, nextButton, retryButton;
     public TextMeshProUGUI levelText;
     public int level = 0, i, i1;
-    // Start is called before the first frame update
+    public bool gameOver = false;
+    bool desableNext = true;
+
     void Start()
     {
+        levelMan = this;
         LevelUI.SetActive(false);
         playButton.SetActive(true);
-        /*
-        i1 = 0;
-        i = 0;
-        scene[i].SetActive(true);
-        level += 1;
-        levelText.text = "Level " + level.ToString();*/
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(i <= 4)
-        {
-            if (Input.GetKeyDown(KeyCode.K))
-            {
-                if (i >= 1)
-                {
-                    i1 += 1;
-                }
-                i += 1;
-                sceneEnable();
-                level += 1;
-                levelText.text = "Level " + level.ToString();
-            }
-        }
-        
     }
-    void sceneEnable()
+    private void Update()
     {
-        scene[i].SetActive(true);
-        scene[i1].SetActive(false);
+        showNextButton();
     }
     public void Play()
     {
         LevelUI.SetActive(true);
-        playButton.SetActive(false);
         mainMenu.SetActive(false);
-        i1 = 0;
-        i = 0;
-        scene[i].SetActive(true);
-        level += 1;
-        levelText.text = "Level " + level.ToString();
+        playButton.GetComponent<Animator>().SetBool("exit", true);
     }
-    public void nexLevel()
+    void showNextButton()
     {
-        if (i <= 4)
+        if (gameOver)
         {
-                if (i >= 1)
-                {
-                    i1 += 1;
-                }
-                i += 1;
-                sceneEnable();
-                level += 1;
-                levelText.text = "Level " + level.ToString();
+            nextButton.SetActive(true);
         }
     }
-    public void retry()
+    public void next()
     {
-        sceneEnable();
+        
     }
 }
