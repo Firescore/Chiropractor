@@ -35,10 +35,33 @@ public class spwnManager : MonoBehaviour
 
         levelManager.levelMan.gameOver = false;
         levelManager.levelMan.nextButton.SetActive(false); ;
-        i = Random.Range(0, 2);
-        OldScene = Instantiate(Scene[i], transform.position, Quaternion.identity);
-        OldScene.transform.parent = nextLv.transform;
+        i = Random.Range(0, 5);
         level += 1;
         levelManager.levelMan.levelText.text = "Level " + level.ToString();
+        if(level == 2)
+        {
+            OldScene = Instantiate(Scene[1], transform.position, Quaternion.identity);
+            OldScene.transform.parent = nextLv.transform;
+        }
+        else if(level == 3)
+        {
+            OldScene = Instantiate(Scene[2], transform.position, Quaternion.identity);
+            OldScene.transform.parent = nextLv.transform;
+        }
+        else if(level == 4)
+        {
+            OldScene = Instantiate(Scene[3], transform.position, Quaternion.identity);
+            OldScene.transform.parent = nextLv.transform;
+        }
+        else if (level == 5)
+        {
+            OldScene = Instantiate(Scene[4], transform.position, Quaternion.identity);
+            OldScene.transform.parent = nextLv.transform;
+        }
+        else if (level >= 6)
+        {
+            OldScene = Instantiate(Scene[i], transform.position, Quaternion.identity);
+            OldScene.transform.parent = nextLv.transform;
+        }
     }
 }

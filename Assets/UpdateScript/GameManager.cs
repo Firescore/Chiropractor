@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public Movement mv;
     public GameObject transitionImage;
     public GameObject leftM, rightM;
+    public GameObject before;
     //public Slider slider;
     [Header("-------------------------------------------")]
 
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
     {
         //slider.gameObject.SetActive(false);        
         transitionImage.SetActive(false);
+        before.SetActive(false);
         leftM.SetActive(false);
         rightM.SetActive(false);
         gm = this;
@@ -56,6 +58,11 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+
+        if (levelManager.levelMan.gameOver)
+        {
+            rootHand.SetActive(false);
+        }
     }
 
     #region Scene 1
@@ -128,6 +135,10 @@ public class GameManager : MonoBehaviour
                 if (swipe <= 6)
                 {
                     coolDown = 1 / swipeRate;
+                   
+                    UIManager.uIManager.SwipeUpToRelese.GetComponent<Animator>().SetBool("out", true);
+
+                    UIManager.uIManager.SwipeDownToGrab.GetComponent<Animator>().SetBool("out", false);
                     lC.SetBool("up", false);
                     rC.SetBool("up", false);
                     rHand.GetComponent<Animator>().SetBool("grab", false);
@@ -139,7 +150,7 @@ public class GameManager : MonoBehaviour
                 if (swipe <= 6)
                     swipe += 1;
 
-                if (swipe <= 6)
+                if (swipe <= 5)
                 {
                     coolDown = 1 / swipeRate;
                     StartCoroutine(grab(0.5f));
@@ -149,6 +160,9 @@ public class GameManager : MonoBehaviour
     }
     IEnumerator grab(float t)
     {
+        UIManager.uIManager.SwipeDownToGrab.GetComponent<Animator>().SetBool("out", true);
+        UIManager.uIManager.SwipeUpToRelese.SetActive(true);
+        UIManager.uIManager.SwipeUpToRelese.GetComponent<Animator>().SetBool("out", false);
         rHand.GetComponent<Animator>().SetBool("grab", true);
         lHand.GetComponent<Animator>().SetBool("grab", true);
         yield return new WaitForSeconds(t);
@@ -157,12 +171,20 @@ public class GameManager : MonoBehaviour
     }
     void finalCrack()
     {
-        if(checkHead.checkH.a && checkHead.checkH.b && checkHead.checkH.c&& SwipeManager.swipeLeft && !chiropracterStarted)
+        if(checkHead.checkH.win && SwipeManager.swipeLeft && !chiropracterStarted)
         {
             
             checkHead.checkH.head1.SetBool("win", true);
             checkHead.checkH.lHand1.SetBool("win", true);
             checkHead.checkH.rHand1.SetBool("win", true);
+            chiropracterStarted = true;
+        }
+        if (checkHead.checkH.faield && SwipeManager.swipeLeft && !chiropracterStarted)
+        {
+
+            checkHead.checkH.head1.SetBool("lose", true);
+            checkHead.checkH.lHand1.SetBool("lose", true);
+            checkHead.checkH.rHand1.SetBool("lose", true);
             chiropracterStarted = true;
         }
     }

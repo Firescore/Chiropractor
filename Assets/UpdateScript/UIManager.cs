@@ -7,6 +7,7 @@ public class UIManager : MonoBehaviour
     public static UIManager uIManager;
     public GameObject PlaceHandsInTheCircle;
     public GameObject SwipeDownToGrab;
+    public GameObject SwipeUpToRelese;
     public GameObject AdjustNeck;
     public GameObject FinalCrack;
     void Start()
@@ -14,6 +15,7 @@ public class UIManager : MonoBehaviour
         uIManager = this;
         PlaceHandsInTheCircle.SetActive(false);
         SwipeDownToGrab.SetActive(false);
+        SwipeUpToRelese.SetActive(false);
         AdjustNeck.SetActive(false);
         FinalCrack.SetActive(false);
     }

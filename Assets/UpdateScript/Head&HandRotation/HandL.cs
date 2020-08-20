@@ -35,10 +35,9 @@ public class HandL : MonoBehaviour
     void slider()
     {
         a = SceneMan.sceneMan.sliderVal;
-        if (a>=0.2 && a <= 0.8)
-        {
+
             transform.localRotation = Quaternion.Euler(SceneMan.sceneMan.sliderVal * (-280), 180, -90);
-        }
+        
         //transform.localPosition = new Vector3(-0.5f, 0.3f, SceneMan.sceneMan.sliderVal * 0.5f);
         //animaion.transform.localRotation = Quaternion.Euler(animaion.transform.localRotation.x, SceneMan.sceneMan.sliderVal * (-130), animaion.transform.localRotation.z);
         //animaion.transform.localPosition = new Vector3(SceneMan.sceneMan.sliderVal/3f, animaion.transform.localPosition.y, animaion.transform.localPosition.z);

@@ -73,7 +73,6 @@ public class Movement : MonoBehaviour
     {
         if (GameManager.gm.handInIdlPos)
         {
-            UIManager.uIManager.PlaceHandsInTheCircle.SetActive(true);
             transform.position = Vector3.MoveTowards(transform.position, walkPos[2], moveSpeed * Time.deltaTime);
             anime.SetBool("sit", true);
         }
@@ -104,14 +103,24 @@ public class Movement : MonoBehaviour
     //after competing level happy emote
     IEnumerator endGame() 
     {
-        if (GameManager.gm.chiropracterStarted)
+        if (GameManager.gm.chiropracterStarted && checkHead.checkH.win)
         {
+            CameraMovement.camMove.anime.SetBool("backToIdlePosition", true);
             UIManager.uIManager.FinalCrack.GetComponent<Animator>().SetBool("out", true);
             yield return new WaitForSeconds(4.2f);
             anime.SetBool("happy", true);
             yield return new WaitForSeconds(1f);
+            GameManager.gm.before.SetActive(true);
             levelManager.levelMan.gameOver = true;
-
+        }
+        if (GameManager.gm.chiropracterStarted && checkHead.checkH.faield)
+        {
+            CameraMovement.camMove.anime.SetBool("backToIdlePosition", true);
+            UIManager.uIManager.FinalCrack.GetComponent<Animator>().SetBool("out", true);
+            yield return new WaitForSeconds(4.2f);
+            anime.SetBool("angry", true);
+            yield return new WaitForSeconds(1f);
+            levelManager.levelMan.gameOver = true;
         }
     }
     #endregion

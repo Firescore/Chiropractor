@@ -4,15 +4,18 @@ using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
+    public static CameraMovement camMove;
     public Animator anime;
 
+    private void Start()
+    {
+        camMove = this;
+    }
     void Update()
     {
         StartCoroutine(transitionToBack());
         StartCoroutine(goUp());
         cameraGoBack();
-
-
     }
     IEnumerator transitionToBack()
     {
@@ -22,6 +25,8 @@ public class CameraMovement : MonoBehaviour
             GameManager.gm.transitionImage.SetActive(true);
             GameManager.gm.x_Ray.SetActive(false);
             anime.SetBool("goBack", true);
+            yield return new WaitForSeconds(1);
+            UIManager.uIManager.PlaceHandsInTheCircle.SetActive(true);
         } 
     }
     IEnumerator goUp()
