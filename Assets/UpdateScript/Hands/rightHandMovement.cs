@@ -70,7 +70,7 @@ public class rightHandMovement : MonoBehaviour
         if (targetX <= 0.07f && targetY <= 0.03f )
         {
             transform.position = pos.position;
-            //transform.localRotation = Quaternion.Euler(0, angleRotate, 0);
+            transform.localRotation = pos.localRotation;
             handPlaced = true;
         }
     }

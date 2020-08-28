@@ -103,24 +103,31 @@ public class Movement : MonoBehaviour
     //after competing level happy emote
     IEnumerator endGame() 
     {
-        if (GameManager.gm.chiropracterStarted && checkHead.checkH.win)
+        if (GameManager.gm.chiropracterStarted && checkHead.checkH.win && levelManager.levelMan.gameOver != true)
         {
             CameraMovement.camMove.anime.SetBool("backToIdlePosition", true);
             UIManager.uIManager.FinalCrack.GetComponent<Animator>().SetBool("out", true);
-            yield return new WaitForSeconds(4.2f);
+            yield return new WaitForSeconds(3.15f);
+            levelManager.levelMan.gameOver = true;
+            yield return new WaitForSeconds(0.2f);
+            GameManager.gm.endLevelParticle.SetActive(true);
+            yield return new WaitForSeconds(1.1f);
             anime.SetBool("happy", true);
             yield return new WaitForSeconds(1f);
             GameManager.gm.before.SetActive(true);
-            levelManager.levelMan.gameOver = true;
+            levelManager.levelMan.nextButton.SetActive(true);
         }
-        if (GameManager.gm.chiropracterStarted && checkHead.checkH.faield)
+        if (GameManager.gm.chiropracterStarted && checkHead.checkH.faield && levelManager.levelMan.gameOver != true)
         {
             CameraMovement.camMove.anime.SetBool("backToIdlePosition", true);
             UIManager.uIManager.FinalCrack.GetComponent<Animator>().SetBool("out", true);
-            yield return new WaitForSeconds(4.2f);
+            yield return new WaitForSeconds(3.15f);
+            levelManager.levelMan.gameOver = true;
+            yield return new WaitForSeconds(1.3f);
+
             anime.SetBool("angry", true);
             yield return new WaitForSeconds(1f);
-            levelManager.levelMan.gameOver = true;
+            levelManager.levelMan.nextButton.SetActive(true);
         }
     }
     #endregion

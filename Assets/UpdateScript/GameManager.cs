@@ -1,7 +1,5 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -16,6 +14,13 @@ public class GameManager : MonoBehaviour
     public GameObject transitionImage;
     public GameObject leftM, rightM;
     public GameObject before;
+    public GameObject HEmoji, AEmoji;
+    public GameObject massageSlider, massageBarD, massageBarU;
+    public GameObject[] HappyEmoji, AngryEmoji;
+    public GameObject particleEffect, particleEffect2, particleEffect3, endLevelParticle;
+    public Transform pos, EmotePos, splashParticle;
+
+    public Transform LPT, RPT;
     //public Slider slider;
     [Header("-------------------------------------------")]
 
@@ -35,10 +40,15 @@ public class GameManager : MonoBehaviour
     public bool rightH = false;
     public bool chiropracterStarted = false;
 
+    bool win = false, fail = false, win2 = false;
     void Start()
     {
-        //slider.gameObject.SetActive(false);        
+        //slider.gameObject.SetActive(false);    
+        massageSlider.SetActive(false);
+        massageBarD.SetActive(false);
+        massageBarU.SetActive(false);
         transitionImage.SetActive(false);
+        endLevelParticle.SetActive(false);
         before.SetActive(false);
         leftM.SetActive(false);
         rightM.SetActive(false);
@@ -126,6 +136,8 @@ public class GameManager : MonoBehaviour
         
         if (cameraPlacedUp)
         {
+            massageSlider.SetActive(true);
+            massageBarD.SetActive(true);
             coolDown -= Time.deltaTime;
             if (SwipeManager.swipeUp && coolDown <=0)
             {
@@ -157,6 +169,14 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+        if (swipe >= 6)
+        {
+            massageSlider.SetActive(false);
+        }
+        if (swipe >= 1)
+        {
+            massageBarD.SetActive(false);
+        }
     }
     IEnumerator grab(float t)
     {
@@ -165,15 +185,24 @@ public class GameManager : MonoBehaviour
         UIManager.uIManager.SwipeUpToRelese.GetComponent<Animator>().SetBool("out", false);
         rHand.GetComponent<Animator>().SetBool("grab", true);
         lHand.GetComponent<Animator>().SetBool("grab", true);
-        yield return new WaitForSeconds(t);
+        yield return new WaitForSeconds(0.17f);
         lC.SetBool("up", true);
         rC.SetBool("up", true);
+        yield return new WaitForSeconds(0.23f);
+        int rand = Random.Range(0, 3);
+        GameObject hE1 = Instantiate(HappyEmoji[rand], pos.position, Quaternion.Euler(35, 90, 0));
+        GameObject hE = Instantiate(particleEffect, LPT.position, Quaternion.identity);
+        GameObject hE2 = Instantiate(particleEffect, RPT.position, Quaternion.identity);
+        hE.transform.parent = LPT;
+        hE2.transform.parent = RPT;
+        Destroy(hE, 4f);
     }
     void finalCrack()
     {
         if(checkHead.checkH.win && SwipeManager.swipeLeft && !chiropracterStarted)
         {
-            
+            happyEmoji();
+            SceneMan.sceneMan.progressBar.gameObject.SetActive(false);
             checkHead.checkH.head1.SetBool("win", true);
             checkHead.checkH.lHand1.SetBool("win", true);
             checkHead.checkH.rHand1.SetBool("win", true);
@@ -181,12 +210,57 @@ public class GameManager : MonoBehaviour
         }
         if (checkHead.checkH.faield && SwipeManager.swipeLeft && !chiropracterStarted)
         {
-
+            
+            SceneMan.sceneMan.progressBar.gameObject.SetActive(false);
             checkHead.checkH.head1.SetBool("lose", true);
             checkHead.checkH.lHand1.SetBool("lose", true);
             checkHead.checkH.rHand1.SetBool("lose", true);
             chiropracterStarted = true;
         }
+        happyEmoji();
+        angryEmoji();
+    }
+    void happyEmoji()
+    {
+        if (levelManager.levelMan.gameOver && !win && checkHead.checkH.win)
+        {
+            StartCoroutine(WinEmot());
+            StartCoroutine(Win());
+        }
+        if (levelManager.levelMan.gameOver && !win2 && checkHead.checkH.win)
+        {
+            GameObject pE = Instantiate(particleEffect2, splashParticle.position, Quaternion.Euler(0, 90, 0));
+            GameObject pE2 = Instantiate(particleEffect3, splashParticle.position, Quaternion.Euler(0, 90, 0));
+            pE.transform.parent = splashParticle;
+            pE2.transform.parent = splashParticle;
+            Destroy(pE, 2f);
+            Destroy(pE2, 2f);
+            win2 = true;
+        }
+    }
+    void angryEmoji()
+    {
+        if (levelManager.levelMan.gameOver && !fail && checkHead.checkH.faield)
+        {
+            Destroy(Instantiate(AEmoji, EmotePos.position, Quaternion.Euler(0, 180, 0)), 2);
+            Destroy(Instantiate(particleEffect3, splashParticle.position, Quaternion.identity), 2);
+            fail = true;
+        }
+
     }
 
+    IEnumerator WinEmot()
+    {
+        while (!win)
+        {
+            float rand = Random.Range(-6f, -9f);
+            Destroy(Instantiate(HEmoji, new Vector3(-33.9f, 1f, rand), Quaternion.Euler(0, 180, 0)), 2);
+            yield return new WaitForSeconds(3.5f);
+        }
+    }
+    IEnumerator Win()
+    {
+        yield return new WaitForSeconds(1);
+        win = true;
+    }
 }

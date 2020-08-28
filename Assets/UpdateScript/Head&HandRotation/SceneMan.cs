@@ -8,6 +8,7 @@ public class SceneMan : MonoBehaviour
     public static SceneMan sceneMan;
     public GameObject HandR, HandL, Head, indicator;
     public Slider headRotatorSlider;
+    public Slider progressBar;
     public GameObject bg1, bg2;
     public float sliderVal = 0f;
 
@@ -20,6 +21,7 @@ public class SceneMan : MonoBehaviour
         headRotatorSlider.value = 0.29f;
         indicator.SetActive(false);
         headRotatorSlider.gameObject.SetActive(false);
+        progressBar.gameObject.SetActive(false);
         //Head.GetComponent<Head>().enabled = false;
         HandL.GetComponent<HandL>().enabled = false;
         HandR.GetComponent<HandR>().enabled = false;
@@ -35,6 +37,7 @@ public class SceneMan : MonoBehaviour
             bg2.SetActive(false);
             indicator.SetActive(true);
             headRotatorSlider.gameObject.SetActive(true);
+            progressBar.gameObject.SetActive(true);
             UIManager.uIManager.SwipeDownToGrab.GetComponent<Animator>().SetBool("out", true);
             UIManager.uIManager.AdjustNeck.SetActive(true);
         }
@@ -52,7 +55,7 @@ public class SceneMan : MonoBehaviour
         if (!a)
         {
             bg1.SetActive(false);
-            bg2.SetActive(true);
+/*            bg2.SetActive(true);*/
             yield return new WaitForSeconds(1.5f);
             indicator.SetActive(false);
             headRotatorSlider.gameObject.SetActive(false);

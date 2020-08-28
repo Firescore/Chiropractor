@@ -5,7 +5,9 @@ using UnityEngine;
 public class checkHead : MonoBehaviour
 {
     public static checkHead checkH;
+    [HideInInspector]
     public bool a, b, c, f, e, g;
+
     public bool faield = false, win = false;
     float d;
 
@@ -25,31 +27,55 @@ public class checkHead : MonoBehaviour
         if(d>=0.79 && d<=10 && !f && !e && a)
         {
             e = true;
+            int r = Random.Range(0, 2);
+            GameObject aE = Instantiate(GameManager.gm.AngryEmoji[r], GameManager.gm.pos.position, Quaternion.Euler(35, 90, 0));
+            //aE.transform.parent = GameManager.gm.pos.transform;
+            Destroy(aE, 4);
         }
 
         if (a && b && !f && !c && d >= 0 && d <= 0.2)
         {
             f = true;
+            int r = Random.Range(0, 2);
+            GameObject aE = Instantiate(GameManager.gm.AngryEmoji[r], GameManager.gm.pos.position, Quaternion.Euler(35, 90, 0));
+            //aE.transform.parent = GameManager.gm.pos.transform;
+            Destroy(aE, 4);
         }
 
         if (!g && a && b && c && d >= 0.8 && d <= 0.10)
         {
             g = true;
+            int r = Random.Range(0, 2);
+            GameObject aE = Instantiate(GameManager.gm.AngryEmoji[r], GameManager.gm.pos.position, Quaternion.Euler(35, 90, 0));
+            //aE.transform.parent = GameManager.gm.pos.transform;
+            Destroy(aE, 4);
         }
 
         if (d >= 0.7 && d <= 0.79 && !a && !b && !c)
         {
             a = true;
+            int r = Random.Range(0, 3);
+            GameObject aE = Instantiate(GameManager.gm.HappyEmoji[r], GameManager.gm.pos.position, Quaternion.Euler(35, 90, 0));
+            //aE.transform.parent = GameManager.gm.pos.transform;
+            Destroy(aE, 4);
         }
 
         if(a && !b && !c && d >= 0.21 && d <= 0.39)
         {
             b = true;
+            int r = Random.Range(0, 3);
+            GameObject aE = Instantiate(GameManager.gm.HappyEmoji[r], GameManager.gm.pos.position, Quaternion.Euler(35, 90, 0));
+            //aE.transform.parent = GameManager.gm.pos.transform;
+            Destroy(aE, 4);
         }
 
         if(a && b && !c && d >= 0.7 && d <= 0.79)
         {
             c = true;
+            int r = Random.Range(0, 3);
+            GameObject aE = Instantiate(GameManager.gm.HappyEmoji[r], GameManager.gm.pos.position, Quaternion.Euler(35, 90, 0));
+            //aE.transform.parent = GameManager.gm.pos.transform;
+            Destroy(aE, 4);
         }
 
 
@@ -67,7 +93,9 @@ public class checkHead : MonoBehaviour
                 lHand1.enabled = true;
                 rHand1.enabled = true;
                 if (!win)
+                {
                     win = true;
+                }
             }
             
         }
@@ -83,9 +111,10 @@ public class checkHead : MonoBehaviour
                 head1.enabled = true;
                 lHand1.enabled = true;
                 rHand1.enabled = true;
-
                 if (!faield)
+                {
                     faield = true;
+                }
             }
 
         }
