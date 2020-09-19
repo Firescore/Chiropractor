@@ -6,7 +6,11 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< Updated upstream
   m_Name: idle
+=======
+  m_Name: Idle
+>>>>>>> Stashed changes
   serializedVersion: 6
   m_Legacy: 0
   m_Compressed: 0
