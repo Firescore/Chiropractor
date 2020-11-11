@@ -8,49 +8,59 @@ public class AppsFlyerInit : MonoBehaviour, IAppsFlyerConversionData {
 
     public string appId = string.Empty;
     public string devKey = string.Empty;
-
-    //******************************//
-    private bool isDebug = false;
-    private bool getConversionData = false;
-    //******************************//
     
     void Start()
     {
-        Debug.Log("AppsFlyer_Unity: Start");
-        AppsFlyer.setIsDebug(isDebug);
-        Debug.Log("AppsFlyer_Unity: Start -> CALL: AppsFlyer.initSDK");
-        AppsFlyer.initSDK(devKey, appId, getConversionData ? this : null);
-        Debug.Log("AppsFlyer_Unity: Start -> CALL: AppsFlyer.startSDK");
+        DebugLog("Start");
+        #if ENABLE_DEBUG_LOG
+        AppsFlyer.setIsDebug(true);
+        #else 
+        AppsFlyer.setIsDebug(false);
+        #endif
+        DebugLog("Start -> appId = " + appId);
+        DebugLog("Start -> devKey = " + devKey);
+        DebugLog("Start -> CALL: AppsFlyer.initSDK");
+        AppsFlyer.initSDK(devKey, appId, this);
+        DebugLog("Start -> CALL: AppsFlyer.startSDK");
         AppsFlyer.startSDK();
-        Debug.Log("AppsFlyer_Unity: Start -> End");
-        // AppsFlyer.setAppsFlyerKey ("8MAzUC3B2BHYVi2uYVHaSd");
-        // AppsFlyer.setAppID (appId);
-        // AppsFlyer.setIsDebug (true);
-        // AppsFlyer.getConversionData ();
-        // AppsFlyer.trackAppLaunch ();
+        DebugLog("Start -> initialization End");
+
+        DebugLog("Start -> sdkVersion = " + AppsFlyer.getSdkVersion());
+        DebugLog("Start -> AppsFlyerId = " + AppsFlyer.getAppsFlyerId());
+        DebugLog("Start -> Register a Conversion Data Listener");
+        AppsFlyer.getConversionData(this.name);
+        DebugLog("Start -> End");
     }
     public void onConversionDataSuccess(string conversionData)
     {
-        AppsFlyer.AFLog("onConversionDataSuccess -> conversionData = ", conversionData);
+        DebugLog("onConversionDataSuccess -> conversionData = " + conversionData);
         Dictionary<string, object> conversionDataDictionary = AppsFlyer.CallbackStringToDictionary(conversionData);
         // add deferred deeplink logic here
     }
 
     public void onConversionDataFail(string error)
     {
-        AppsFlyer.AFLog("onConversionDataFail -> error = ", error);
+        DebugLog("onConversionDataFail -> error = " + error);
     }
 
     public void onAppOpenAttribution(string attributionData)
     {
-        AppsFlyer.AFLog("onAppOpenAttribution -> attributionData = ", attributionData);
+        DebugLog("onAppOpenAttribution -> attributionData = " + attributionData);
+
         Dictionary<string, object> attributionDataDictionary = AppsFlyer.CallbackStringToDictionary(attributionData);
         // add direct deeplink logic here
     }
 
     public void onAppOpenAttributionFailure(string error)
     {
-        AppsFlyer.AFLog("onAppOpenAttributionFailure -> error = ", error);
+        DebugLog("onAppOpenAttributionFailure -> error = " + error);
+    }
+
+    private void DebugLog(string log)
+    {
+#if ENABLE_DEBUG_LOG
+        Debug.Log("TT_DEBUG:: AppsFlyerInit[v." + AppsFlyer.kAppsFlyerPluginVersion + "]:: " + log);
+#endif
     }
 #endif
 }
